@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView text_view_notification;
 
     //........................
-   private View search_image;
+    private View search_image;
+
+    private static final int REQUEST_CODE = 101;
 
 
     @Override
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "Trying to open search page");
                 Intent mapsIntent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(mapsIntent);
+                startActivityForResult(mapsIntent, REQUEST_CODE);
             }
         });
 
@@ -169,6 +171,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_CODE && data !=null) {
+                String strMessage = data.getStringExtra("keyName");
+                Log.i(TAG + "ret_val", "onActivityResult: message >>" + strMessage);
+            }
+        }
     }
 
 
