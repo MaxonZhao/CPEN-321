@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -40,7 +39,6 @@ import org.json.JSONObject;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
-    private GoogleMap mMap;
     final static String TAG = "MapActivity";
 
     SeekBar simpleSeekBar;
@@ -228,6 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        GoogleMap mMap;
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera

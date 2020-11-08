@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             TextView text_view_notification;
-            
+
             String message = intent.getStringExtra("message");
             text_view_notification = findViewById(R.id.text_view_notification);
             text_view_notification.setText(message);
