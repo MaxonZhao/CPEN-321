@@ -56,7 +56,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTxt, messageTxt;
+        TextView nameTxt;
+        TextView messageTxt;
 
         public ReceivedMessageHolder(@NonNull View itemView) {
             super(itemView);
@@ -132,10 +133,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
                 view = inflater.inflate(R.layout.item_received_photo, parent, false);
                 return new ReceivedImageHolder(view);
-
+            default:
+                return null;
         }
-
-        return null;
     }
 
     @Override

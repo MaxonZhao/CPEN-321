@@ -46,8 +46,9 @@ public class Chat extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), Post.class));
                         overridePendingTransition(0,0);
                         return true;
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 

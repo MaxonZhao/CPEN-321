@@ -1,22 +1,14 @@
 package com.example.cpen321_m5;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,29 +17,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.loopj.android.http.AsyncHttpClient;import com.loopj.android.http.AsyncHttpResponseHandler;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import android.content.IntentFilter;
-
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.BreakIterator;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -58,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Button button_retrieve_token;
     private ImageView sign_in_image;
 
-    private int RC_SIGN_IN = 1;
     final static String TAG = "MainActivity";
     static final private String request_time_URL = "https://timedisplayer.azurewebsites.net/time";
     private TextView TimeTextView;
@@ -97,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), Post.class));
                         overridePendingTransition(0,0);
                         return true;
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 
@@ -237,29 +221,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("message");
-            Bundle bundle;
             text_view_notification = findViewById(R.id.text_view_notification);
             text_view_notification.setText(message);
         }
     };
 
-
-
-    private void updateUI(GoogleSignInAccount account) {
-        if (account == null) {
-            Log.d(TAG, "There is no user signed in!");
-        } else {
-            Log.d(TAG, "Pref Name: " + account.getDisplayName());
-            Log.d(TAG, "Email Name: " + account.getEmail());
-            Log.d(TAG, "Given Name: " + account.getGivenName());
-            Log.d(TAG, "Family Name: " + account.getFamilyName());
-            Log.d(TAG, "Display URL: " + account.getPhotoUrl());
-
-            // Send token to your back-end
-            account.getIdToken();
-            // Move to another activity
-        }
-    }
 
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -277,8 +243,6 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(MainActivity.this,"We need these location permissions to run", Toast.LENGTH_LONG).show();
-                                DialogInterface dialogInterface;
-//                                dialogInterface.dismiss();
                             }
                         })
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -297,12 +261,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
     @Override
     public void onStop() {
         super.onStop();

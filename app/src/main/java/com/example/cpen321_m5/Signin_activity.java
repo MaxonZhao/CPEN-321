@@ -1,14 +1,14 @@
 package com.example.cpen321_m5;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,12 +22,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class Signin_activity extends AppCompatActivity {
 
     private int RC_SIGN_IN = 1;
-    final static String TAG = "Signin_activity";
+    private final static String TAG = "Signin_activity";
     private GoogleSignInClient mGoogleSignInClient;
-    private Button signOutButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button signOutButton;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin_activity);
 
@@ -55,8 +56,9 @@ public class Signin_activity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), Post.class));
                         overridePendingTransition(0,0);
                         return true;
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 
@@ -100,6 +102,7 @@ public class Signin_activity extends AppCompatActivity {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

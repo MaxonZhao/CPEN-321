@@ -37,7 +37,8 @@ public class ChatRoom extends AppCompatActivity implements TextWatcher {
     private WebSocket webSocket;
     private String SERVER_PATH = "ws://20.185.220.227:3000";
     private EditText messageEdit;
-    private View sendBtn, pickImgBtn;
+    private View sendBtn;
+    private View pickImgBtn;
     private RecyclerView recyclerView;
     private int IMAGE_REQUEST_ID = 1;
     private MessageAdapter messageAdapter;
@@ -60,14 +61,15 @@ public class ChatRoom extends AppCompatActivity implements TextWatcher {
 
     }
 
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+        return;
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        return;
     }
 
     @Override

@@ -1,8 +1,5 @@
 package com.example.cpen321_m5;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,23 +28,23 @@ public class Post extends AppCompatActivity {
 
 //    private BottomNavigationView bottomNavigationView;
 
-    Button submit;
-    EditText priceedit;
-    String pricestring;                             //price that use enter in
+    private Button submit;
+    private EditText priceedit;
+    private String pricestring;                             //price that use enter in
 
-    Spinner loc_spi;
-    String locationstring;                          //location that use enter in
-    Spinner typ_spi;
-    String typesstring;                             //types that use enter in
+    private Spinner loc_spi;
+    private String locationstring;                          //location that use enter in
+    private Spinner typ_spi;
+    private String typesstring;                             //types that use enter in
 
-    TextInputLayout phone_til;                      //phone num that user enter in
-    String phonestring;
+    private TextInputLayout phone_til;                      //phone num that user enter in
+    private String phonestring;
 
-    TextInputLayout email_til;                      //email that user enter in
-    String emailstring;
+    private TextInputLayout email_til;                      //email that user enter in
+    private String emailstring;
 
-    TextInputLayout description_til;                //description that user enter in
-    String descriptionstring;
+    private TextInputLayout description_til;                //description that user enter in
+    private String descriptionstring;
 
 
 
@@ -75,8 +75,9 @@ public class Post extends AppCompatActivity {
                         return true;
                     case R.id.nav_post:
                         return true;
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
         //......................................................................................

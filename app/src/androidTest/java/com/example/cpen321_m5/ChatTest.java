@@ -1,13 +1,10 @@
 package com.example.cpen321_m5;
 
-import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,14 +33,6 @@ public class ChatTest {
     @Rule
     public IntentsTestRule<Chat> intentsTestRule =
             new IntentsTestRule<>(Chat.class);
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
 
 //    @Test
 //    public void onCreate() {
@@ -56,7 +45,7 @@ public class ChatTest {
     public void onStart() {
         // check if enter button is displayed on the screen
         onView(withId(R.id.enterBtn)).check(matches(isDisplayed()));
-        Espresso.onView(withId(R.id.enterBtn))
+        onView(withId(R.id.enterBtn))
 //                .perform(click())
                 .check(matches((isEnabled())));
     }
@@ -69,6 +58,9 @@ public class ChatTest {
         onView(withId(R.id.editText)).check(matches(withText("Maxon")));
         onView(withId(R.id.enterBtn)).perform(click());
         intended(hasComponent(ChatRoom.class.getName()));
+        onView(withId(R.id.messageEdit)).check(matches(isDisplayed()));
+        onView(withId(R.id.pickImgBtn)).check(matches(isDisplayed()));
+        onView(withId(R.id.recyclerView_e)).check(matches(isDisplayed()));
     }
 
 }

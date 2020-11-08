@@ -1,18 +1,8 @@
 package com.example.cpen321_m5;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,21 +13,19 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,26 +34,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.android.volley.Request.Method.GET;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
-    private GoogleMap mMap;
-    private LocationManager locationManager;
+
+//    private LocationManager locationManager;
     final static String TAG = "MapActivity";
 
     //.......................
-    SeekBar simpleSeekBar;
-    EditText ed;
+    private SeekBar simpleSeekBar;
+    private EditText ed;
 
-    String search_price;
-    Spinner search_loc_spi;
-    String search_loc;                          //location that use enter in
-    Spinner search_typs_spi;
-    String search_typs;                             //types that use enter in
+    private String search_price;
+    private Spinner search_loc_spi;
+    private String search_loc;                          //location that use enter in
+    private Spinner search_typs_spi;
+    private String search_typs;                             //types that use enter in
 
 
     int price_test;
@@ -272,8 +255,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         startActivity(new Intent(getApplicationContext(), Post.class));
                         overridePendingTransition(0,0);
                         return true;
+                    default:
+                        return false;
                 }
-                return false;
             }
         });
 
@@ -291,7 +275,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
         //LatLng my_home = new LatLng(24, 109);
@@ -345,84 +329,84 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        Circle Place_Vanier = mMap.addCircle(new CircleOptions()
-                .center(loc_pv)
-                .radius(num_pv)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876")));
-
-        Circle Totem_Park = mMap.addCircle(new CircleOptions()
-                .center(loc_tp)
-                .radius(num_tp)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Orchard_Commons = mMap.addCircle(new CircleOptions()
-                .center(loc_oc)
-                .radius(num_oc)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Ritsumeikan_UBC_House = mMap.addCircle(new CircleOptions()
-                .center(loc_ruh)
-                .radius(num_ruh)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Walter_Gage = mMap.addCircle(new CircleOptions()
-                .center(loc_wg)
-                .radius(num_wg)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Fairview_Crescent = mMap.addCircle(new CircleOptions()
-                .center(loc_fc)
-                .radius(num_fc)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Marine_Driver = mMap.addCircle(new CircleOptions()
-                .center(loc_md)
-                .radius(num_md)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Fraser_Hall = mMap.addCircle(new CircleOptions()
-                .center(loc_fh)
-                .radius(num_fh)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Ponderosa_Commons = mMap.addCircle(new CircleOptions()
-                .center(loc_pc)
-                .radius(num_pc)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Thunderbird = mMap.addCircle(new CircleOptions()
-                .center(loc_th)
-                .radius(num_th)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle lona_House = mMap.addCircle(new CircleOptions()
-                .center(loc_lh)
-                .radius(num_lh)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Brock_Commons_Tallwood_House = mMap.addCircle(new CircleOptions()
-                .center(loc_bcth)
-                .radius(num_bcth)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        Circle Exchange = mMap.addCircle(new CircleOptions()
-                .center(loc_ex)
-                .radius(num_ex)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
+//        Circle Place_Vanier = mMap.addCircle(new CircleOptions()
+//                .center(loc_pv)
+//                .radius(num_pv)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876")));
+//
+//        Circle Totem_Park = mMap.addCircle(new CircleOptions()
+//                .center(loc_tp)
+//                .radius(num_tp)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Orchard_Commons = mMap.addCircle(new CircleOptions()
+//                .center(loc_oc)
+//                .radius(num_oc)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Ritsumeikan_UBC_House = mMap.addCircle(new CircleOptions()
+//                .center(loc_ruh)
+//                .radius(num_ruh)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Walter_Gage = mMap.addCircle(new CircleOptions()
+//                .center(loc_wg)
+//                .radius(num_wg)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Fairview_Crescent = mMap.addCircle(new CircleOptions()
+//                .center(loc_fc)
+//                .radius(num_fc)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Marine_Driver = mMap.addCircle(new CircleOptions()
+//                .center(loc_md)
+//                .radius(num_md)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Fraser_Hall = mMap.addCircle(new CircleOptions()
+//                .center(loc_fh)
+//                .radius(num_fh)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Ponderosa_Commons = mMap.addCircle(new CircleOptions()
+//                .center(loc_pc)
+//                .radius(num_pc)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Thunderbird = mMap.addCircle(new CircleOptions()
+//                .center(loc_th)
+//                .radius(num_th)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle lona_House = mMap.addCircle(new CircleOptions()
+//                .center(loc_lh)
+//                .radius(num_lh)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Brock_Commons_Tallwood_House = mMap.addCircle(new CircleOptions()
+//                .center(loc_bcth)
+//                .radius(num_bcth)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
+//        Circle Exchange = mMap.addCircle(new CircleOptions()
+//                .center(loc_ex)
+//                .radius(num_ex)
+//                .strokeColor(Color.parseColor("#cee397"))
+//                .fillColor(Color.parseColor("#fcf876"))
+//        );
 
     }
 
@@ -431,18 +415,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, "Lat: " + location.getLatitude() + "| Long: " + location.getLongitude());
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-
-    }
 }
