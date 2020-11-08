@@ -280,79 +280,92 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        Circle Place_Vanier = mMap.addCircle(new CircleOptions()
+        //Circle Place_Vanier =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_pv)
                 .radius(num_pv)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876")));
 
-        Circle Totem_Park = mMap.addCircle(new CircleOptions()
+        //Circle Totem_Park =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_tp)
                 .radius(num_tp)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Orchard_Commons = mMap.addCircle(new CircleOptions()
+        //Circle Orchard_Commons =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_oc)
                 .radius(num_oc)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Ritsumeikan_UBC_House = mMap.addCircle(new CircleOptions()
+        //Circle Ritsumeikan_UBC_House =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_ruh)
                 .radius(num_ruh)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Walter_Gage = mMap.addCircle(new CircleOptions()
+        //Circle Walter_Gage =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_wg)
                 .radius(num_wg)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Fairview_Crescent = mMap.addCircle(new CircleOptions()
+        //Circle Fairview_Crescent =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_fc)
                 .radius(num_fc)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Marine_Driver = mMap.addCircle(new CircleOptions()
+        //Circle Marine_Driver =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_md)
                 .radius(num_md)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Fraser_Hall = mMap.addCircle(new CircleOptions()
+        //Circle Fraser_Hall =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_fh)
                 .radius(num_fh)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Ponderosa_Commons = mMap.addCircle(new CircleOptions()
+        //Circle Ponderosa_Commons =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_pc)
                 .radius(num_pc)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Thunderbird = mMap.addCircle(new CircleOptions()
+        //Circle Thunderbird =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_th)
                 .radius(num_th)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle lona_House = mMap.addCircle(new CircleOptions()
+        //Circle lona_House =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_lh)
                 .radius(num_lh)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Brock_Commons_Tallwood_House = mMap.addCircle(new CircleOptions()
+        //Circle Brock_Commons_Tallwood_House =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_bcth)
                 .radius(num_bcth)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876"))
         );
-        Circle Exchange = mMap.addCircle(new CircleOptions()
+        //Circle Exchange =
+                mMap.addCircle(new CircleOptions()
                 .center(loc_ex)
                 .radius(num_ex)
                 .strokeColor(Color.parseColor("#cee397"))
@@ -366,18 +379,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, "Lat: " + location.getLatitude() + "| Long: " + location.getLongitude());
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-
-    }
+//    @Override
+//    public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderEnabled(@NonNull String provider) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderDisabled(@NonNull String provider) {
+//
+//    }
 }
