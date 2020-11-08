@@ -28,7 +28,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -39,13 +38,13 @@ import org.json.JSONObject;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
-    final static String TAG = "MapActivity";
+    private final static String TAG = "MapActivity";
 
-    SeekBar simpleSeekBar;
-    EditText ed;
+    private SeekBar simpleSeekBar;
+    private EditText ed;
 
-    String search_price;
-    int price_test;
+    private String search_price;
+    private int price_test;
 
 
 

@@ -37,7 +37,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
 
-    final static String TAG = "MainActivity";
+    private final static String TAG = "MainActivity";
     static final private String request_time_URL = "https://timedisplayer.azurewebsites.net/time";
     private TextView TimeTextView;
 
@@ -180,11 +180,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_CODE && data !=null) {
-                String strMessage = data.getStringExtra("keyName");
-                Log.i(TAG + "ret_val", "onActivityResult: message >>" + strMessage);
-            }
+        if(resultCode == RESULT_OK && requestCode == REQUEST_CODE && data !=null){
+            String strMessage = data.getStringExtra("keyName");
+            Log.i(TAG + "ret_val", "onActivityResult: message >>" + strMessage);
         }
     }
 
