@@ -36,25 +36,30 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
-    private Button locationButton;
-    private Button mapsButton;
-    private Button timeButton;
-    private Button button_retrieve_token;
-    private ImageView sign_in_image;
 
     final static String TAG = "MainActivity";
     static final private String request_time_URL = "https://timedisplayer.azurewebsites.net/time";
     private TextView TimeTextView;
-    private TextView text_view_notification;
 
-    //........................
-    private View search_image;
 
     private static final int REQUEST_CODE = 101;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Button locationButton;
+        Button mapsButton;
+        Button timeButton;
+        Button button_retrieve_token;
+        ImageView sign_in_image;
+
+
+
+        //........................
+        View search_image;
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -232,6 +237,8 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            TextView text_view_notification;
+            
             String message = intent.getStringExtra("message");
             text_view_notification = findViewById(R.id.text_view_notification);
             text_view_notification.setText(message);
