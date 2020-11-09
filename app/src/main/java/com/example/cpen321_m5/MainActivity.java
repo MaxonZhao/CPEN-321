@@ -40,39 +40,25 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = "MainActivity";
-    static final private String request_time_URL = "https://timedisplayer.azurewebsites.net/time";
-    private TextView TimeTextView;
-
-
     private static final int REQUEST_CODE = 101;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Button locationButton;
-        Button mapsButton;
-        Button timeButton;
         Button button_retrieve_token;
         ImageView sign_in_image;
-
-
-
         //........................
         View search_image;
-
-
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("MyData"));
-
         // initialize And Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
         // set Home Selected
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
-
         // perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener(){
 
@@ -124,27 +110,6 @@ public class MainActivity extends AppCompatActivity {
             Log.w(TAG, "Device doesn't have google play services");
         }
 
-        locationButton = findViewById(R.id.location_button);
-        locationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkLocationPermission();
-                Log.d(TAG, "Trying to request location permissions");
-                Toast.makeText(MainActivity.this,"Trying to request location permissions", Toast.LENGTH_LONG).show();
-
-            }
-        });
-        mapsButton = findViewById(R.id.maps_button);
-        mapsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Trying to open google maps");
-                Intent mapsIntent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(mapsIntent);
-            }
-        });
-
-
         search_image = findViewById(R.id.search_image);
         search_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,19 +119,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(mapsIntent, REQUEST_CODE);
             }
         });
-
-
-
-        timeButton = findViewById(R.id.request_time_button);
-        timeButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                requestTime(request_time_URL);
-            }
-        });
-
-        TimeTextView = findViewById(R.id.time_displayer);
 
         sign_in_image = findViewById(R.id.sign_in_image);
         sign_in_image.setOnClickListener(new View.OnClickListener() {
@@ -206,35 +158,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    private void requestTime(String url) {
-        Log.d(TAG, "requesting Time");
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                            String time = new String(responseBody);
-                            Log.d(TAG, time);
-                            TimeTextView.setText(time);
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        Log.d(TAG, "Request fail! Status code: " + statusCode);
-                        Log.d(TAG, "Fail response: " + new String(responseBody));
-                        Log.d(TAG, error.toString());
-
-                        Toast.makeText(MainActivity.this, "Request Failed",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                /* reference
-                 1.https://stackoverflow.com/questions/36912389/converting-byte-to-jsonobject
-                 2.https://blog.hyperiondev.com/index.php/2019/02/18/android-http/
-                 */
-
-    }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
