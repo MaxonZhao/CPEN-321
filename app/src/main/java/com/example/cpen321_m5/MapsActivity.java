@@ -249,126 +249,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int num_ex = 258;
 
         LatLng loc_pv = new LatLng(49.264746, -123.258670);
-        mMap.addMarker(new MarkerOptions().position(loc_pv).title("Place Vanier: "+String.valueOf(num_pv)));
         LatLng loc_tp = new LatLng(49.257969, -123.253107);
-        mMap.addMarker(new MarkerOptions().position(loc_tp).title("Totem Park: "+String.valueOf(num_tp)));
         LatLng loc_oc = new LatLng(49.260087, -123.251039);
-        mMap.addMarker(new MarkerOptions().position(loc_oc).title("Orchard Commons: "+String.valueOf(num_oc)));
         LatLng loc_ruh = new LatLng(49.259862, -123.252906);
-        mMap.addMarker(new MarkerOptions().position(loc_ruh).title("Ritsumeikan-UBC House: "+String.valueOf(num_ruh)));
         LatLng loc_wg = new LatLng(49.269579, -123.249641);
-        mMap.addMarker(new MarkerOptions().position(loc_wg).title("Walter Gage: "+String.valueOf(num_wg)));
         LatLng loc_fc = new LatLng(49.263254, -123.239600);
-        mMap.addMarker(new MarkerOptions().position(loc_fc).title("Fairview Crescent: "+String.valueOf(num_fc)));
         LatLng loc_md = new LatLng(49.261430, -123.256699);
-        mMap.addMarker(new MarkerOptions().position(loc_md).title("Marine Driver: "+String.valueOf(num_md)));
         LatLng loc_fh = new LatLng(49.261550, -123.240755);
-        mMap.addMarker(new MarkerOptions().position(loc_fh).title("Fraser Hall: "+String.valueOf(num_fh)));
         LatLng loc_pc = new LatLng(49.263831, -123.255598);
-        mMap.addMarker(new MarkerOptions().position(loc_pc).title("Ponderosa Commons: "+String.valueOf(num_pc)));
         LatLng loc_th = new LatLng(49.259333, -123.250730);
-        mMap.addMarker(new MarkerOptions().position(loc_th).title("Thunderbird: "+String.valueOf(num_th)));
         LatLng loc_lh = new LatLng(49.265565, -123.257267);
-        mMap.addMarker(new MarkerOptions().position(loc_lh).title("lona House: "+String.valueOf(num_lh)));
         LatLng loc_bcth = new LatLng(49.269507, -123.251333);
-        mMap.addMarker(new MarkerOptions().position(loc_bcth).title("Brock Commons - Tallwood House: "+String.valueOf(num_bcth)));
         LatLng loc_ex = new LatLng(49.268426, -123.247527);
-        mMap.addMarker(new MarkerOptions().position(loc_ex).title("Exchange: "+String.valueOf(num_ex)));
+
+        markandcircle(mMap, loc_pv, num_pv);
+        markandcircle(mMap, loc_tp, num_tp);
+        markandcircle(mMap, loc_oc, num_oc);
+        markandcircle(mMap, loc_ruh, num_ruh);
+        markandcircle(mMap, loc_wg, num_wg);
+        markandcircle(mMap, loc_fc, num_fc);
+        markandcircle(mMap, loc_md, num_md);
+        markandcircle(mMap, loc_fh, num_fh);
+        markandcircle(mMap, loc_pc, num_pc);
+        markandcircle(mMap, loc_th, num_th);
+        markandcircle(mMap, loc_lh, num_lh);
+        markandcircle(mMap, loc_bcth, num_bcth);
+        markandcircle(mMap, loc_ex, num_ex);
 
 
 
-        //Circle Place_Vanier =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_pv)
-                .radius(num_pv)
+    }
+    public void markandcircle(GoogleMap mMap, LatLng location, int size){
+
+        mMap.addMarker(new MarkerOptions().position(location).title("Exchange: "+String.valueOf(size)));
+        mMap.addCircle(new CircleOptions()
+                .center(location)
+                .radius(size)
                 .strokeColor(Color.parseColor("#cee397"))
                 .fillColor(Color.parseColor("#fcf876")));
-
-        //Circle Totem_Park =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_tp)
-                .radius(num_tp)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Orchard_Commons =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_oc)
-                .radius(num_oc)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Ritsumeikan_UBC_House =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_ruh)
-                .radius(num_ruh)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Walter_Gage =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_wg)
-                .radius(num_wg)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Fairview_Crescent =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_fc)
-                .radius(num_fc)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Marine_Driver =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_md)
-                .radius(num_md)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Fraser_Hall =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_fh)
-                .radius(num_fh)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Ponderosa_Commons =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_pc)
-                .radius(num_pc)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Thunderbird =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_th)
-                .radius(num_th)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle lona_House =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_lh)
-                .radius(num_lh)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Brock_Commons_Tallwood_House =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_bcth)
-                .radius(num_bcth)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-        //Circle Exchange =
-                mMap.addCircle(new CircleOptions()
-                .center(loc_ex)
-                .radius(num_ex)
-                .strokeColor(Color.parseColor("#cee397"))
-                .fillColor(Color.parseColor("#fcf876"))
-        );
-
     }
 
     @Override
