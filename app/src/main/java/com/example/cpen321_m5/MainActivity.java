@@ -33,6 +33,8 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
@@ -181,8 +183,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == REQUEST_CODE && data !=null){
-            String strMessage = data.getStringExtra("keyName");
-            Log.i(TAG + "ret_val", "onActivityResult: message >>" + strMessage);
+            //String strMessage = data.getStringExtra("keyName");
+            ArrayList<String> strMessage = data.getStringArrayListExtra("keyName");
+            Log.i(TAG , "Search Result >>" + strMessage);
+            //System.out.println(strMessage);
         }
     }
 
