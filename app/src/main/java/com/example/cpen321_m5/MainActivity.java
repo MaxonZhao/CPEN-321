@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         sign_in_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Signin_activity.class);
+                Intent intent = new Intent(MainActivity.this, Signingactivity.class);
                 startActivity(intent);
             }
         });
