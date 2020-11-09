@@ -82,11 +82,11 @@ public class Post extends AppCompatActivity {
 
                 try {
                     postData.put("price", Integer.valueOf(pricestring));
-                    postData.put("location", ret_spinner_val(R.id.location_spi));
-                    postData.put("types", ret_spinner_val(R.id.types_spi));
-                    postData.put("phone", ret_text_val(R.id.editphone));
-                    postData.put("email", ret_text_val(R.id.editemail));
-                    postData.put("descript", ret_text_val(R.id.editdescrip));
+                    postData.put("location", retspinner(R.id.location_spi));
+                    postData.put("types", retspinner(R.id.types_spi));
+                    postData.put("phone", rettext(R.id.editphone));
+                    postData.put("email", rettext(R.id.editemail));
+                    postData.put("descript", rettext(R.id.editdescrip));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -110,14 +110,14 @@ public class Post extends AppCompatActivity {
     }
 
 
-    public String ret_spinner_val(int id_number){
+    public String retspinner(int id_number){
         Spinner goal_spi = (Spinner) findViewById(id_number);
         String resultstring = goal_spi.getSelectedItem().toString();
         Log.v("post", resultstring);
         return resultstring;
     }
 
-    public String ret_text_val(int id_number){
+    public String rettext(int id_number){
         TextInputLayout goal_til = (TextInputLayout) findViewById(id_number);
         String resultstring = goal_til.getEditText().getText().toString();
         Log.v("post", resultstring);
