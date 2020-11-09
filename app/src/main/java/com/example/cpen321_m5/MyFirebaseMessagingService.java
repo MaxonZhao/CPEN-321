@@ -12,7 +12,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    final static String TAG = "MessagingService";
+    private final static String TAG = "MessagingService";
     private LocalBroadcastManager broadcastManager = null;
 
     @Override

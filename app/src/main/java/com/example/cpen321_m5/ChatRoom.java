@@ -64,12 +64,10 @@ public class ChatRoom extends AppCompatActivity implements TextWatcher {
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        return;
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        return;
     }
 
     @Override
