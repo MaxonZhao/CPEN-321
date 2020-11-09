@@ -19,7 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Signing_activity extends AppCompatActivity {
+public class Signin_activity extends AppCompatActivity {
 
     private int RC_SIGN_IN = 1;
     private final static String TAG = "Signin_activity";

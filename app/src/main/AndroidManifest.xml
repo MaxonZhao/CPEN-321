@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ChatRoom"></activity>
-        <activity android:name=".Signing_activity" />
+        <activity android:name=".Signin_activity" />
         <activity android:name=".Chat" />
         <activity android:name=".Post" />
         <!--
