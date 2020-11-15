@@ -72,7 +72,7 @@
 42        <activity android:name="com.example.cpen321_m5.ChatRoom" />
 42-->C:\CPEN___321\app\src\main\AndroidManifest.xml:22:9-55
 42-->C:\CPEN___321\app\src\main\AndroidManifest.xml:22:19-43
-43        <activity android:name="com.example.cpen321_m5.Signin_activity" />
+43        <activity android:name="com.example.cpen321_m5.Signingactivity" />
 43-->C:\CPEN___321\app\src\main\AndroidManifest.xml:23:9-53
 43-->C:\CPEN___321\app\src\main\AndroidManifest.xml:23:19-50
 44        <activity android:name="com.example.cpen321_m5.Chat" />

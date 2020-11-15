@@ -35,7 +35,7 @@ public class ChatRoom extends AppCompatActivity implements TextWatcher {
 
     private String name;
     private WebSocket webSocket;
-    private String SERVER_PATH = "ws://20.185.220.227:3000";
+    private String SERVER_PATH = "ws://40.87.45.133:3001";
     private EditText messageEdit;
     private View sendBtn;
     private View pickImgBtn;

@@ -18,9 +18,9 @@
         app:menu="@menu/bottom_menu" />
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="672dp"
-        android:layout_marginTop="90dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:background="#ffa5a5"
         android:fillViewport="false"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
@@ -105,6 +105,7 @@
                 app:counterMaxLength="10">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editphonetie"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="#fcdada"
@@ -119,6 +120,7 @@
                 android:layout_height="65dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editemailtie"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="#fcdada"
@@ -135,6 +137,7 @@
                 app:counterMaxLength="450">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editdescriptie"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#fcdada"

@@ -76,7 +76,7 @@ public class Post extends AppCompatActivity {
                 pricestring = priceedit.getText().toString();
                 Log.v("post/price", pricestring);
 
-                String postUrl = "http:40.76.20.105:3000";
+                String postUrl = "http:40.87.45.133:3000";
                 RequestQueue requestQueue = Volley.newRequestQueue(Post.this);
                 JSONObject postData = new JSONObject();
 

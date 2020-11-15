@@ -212,7 +212,7 @@ activity#com.example.cpen321_m5.ChatRoom
 ADDED from C:\CPEN___321\app\src\main\AndroidManifest.xml:22:9-55
 	android:name
 		ADDED from C:\CPEN___321\app\src\main\AndroidManifest.xml:22:19-43
-activity#com.example.cpen321_m5.Signin_activity
+activity#com.example.cpen321_m5.Signingactivity
 ADDED from C:\CPEN___321\app\src\main\AndroidManifest.xml:23:9-53
 	android:name
 		ADDED from C:\CPEN___321\app\src\main\AndroidManifest.xml:23:19-50

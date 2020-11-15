@@ -1850,8 +1850,11 @@ id easeOut
 id editText
 id edit_query
 id editdescrip
+id editdescriptie
 id editemail
+id editemailtie
 id editphone
+id editphonetie
 id editprice
 id end
 id end_padder

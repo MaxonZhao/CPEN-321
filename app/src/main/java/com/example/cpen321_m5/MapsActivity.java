@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
@@ -46,7 +49,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText ed;
 
     private String search_price;
-    private int price_test;
+    private int price_test = 0;
+    private boolean flag = false;
 
     private ArrayList<String> jsonresult = new ArrayList<String>();
 
@@ -63,19 +67,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ed = (EditText) findViewById(R.id.search_price_edi);
         simpleSeekBar=(SeekBar)findViewById(R.id.seekBar);
-        ed.setOnClickListener(new EditText.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                price_test = Integer.parseInt(ed.getText().toString());
-                search_price = String.valueOf(price_test);
-                if(price_test <= 10000){
-                    simpleSeekBar.setProgress(price_test);
 
-                    price_test = Integer.parseInt(ed.getText().toString());
-                    search_price = String.valueOf(price_test);
-                }
+
+        ed.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                price_test = 0;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                price_test = 0;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try{
+                    search_price = String.valueOf(ed.getText());
+                    price_test = Integer.parseInt(search_price);
+
+                    if(price_test < 10000){
+                        simpleSeekBar.setProgress(price_test);
+                    }
+                }catch (Exception ex){}
+
             }
         });
+
 
         simpleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
@@ -96,6 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
         Button btnReturn1 = (Button) findViewById(R.id.search_submit_but);
         btnReturn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -114,12 +133,81 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 search_typs = search_typs_spi.getSelectedItem().toString();
                 Log.v("search/types:", search_typs);
 
-                Log.v("search/price:", search_price);
+                Log.v("search/price:", String.valueOf(price_test));
 
-                Intent mIntent = new Intent();
-                mIntent.putExtra("keyName", getmess(search_loc, search_typs));
-                setResult(RESULT_OK, mIntent);
-                finish();
+
+                //........................................................................................................
+                String url = "http:40.87.45.133:3000/search";
+                RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
+                JSONObject postData = new JSONObject();
+                try {
+                    Log.i("search/send", search_price);
+                    Log.i("search/send", search_loc);
+                    Log.i("search/send", search_typs);
+
+                    postData.put("price", Integer.valueOf(search_price));
+                    postData.put("location", search_loc);
+                    postData.put("types", search_typs);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+                requestQueue.add(jsonObjectRequest);
+                //.......................................................................................................
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  new Response.Listener < JSONArray > () {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("search/return", "success in respones");
+                        try {
+                            Log.i("search/return", "success get the array");
+                            if(response.length() == 0){
+
+                                Log.i("search/return length", String.valueOf(response.length()));
+                            }
+                            else{
+                                Log.i("search/return length", String.valueOf(response.length()));
+                                for (int i = 0; i < response.length(); i++) {
+                                    JSONObject jb = response.getJSONObject(i);
+                                    Log.i("search/one of result",jb.toString());
+
+                                    jsonresult.add(jb.toString());
+                                    System.out.println("jsonresult");
+                                    System.out.println(jsonresult.size());
+                                }
+                                Intent mIntent = new Intent();
+                                mIntent.putExtra("keyName", jsonresult);
+                                setResult(RESULT_OK, mIntent);
+                                finish();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("research", error.toString());
+                    }
+                });
+
+                jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(500000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                requestQueue.add(jsonArrayRequest);
+
+
+                //.........................................................................................................
 
             }
         });
@@ -153,64 +241,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public ArrayList<String> getmess(String search_loc, String search_typs){
+    //public ArrayList<String> getmess(String search_loc, String search_typs) throws InterruptedException {
 
-        String url = "http:40.76.20.105:3000/search";
-        RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("price", Integer.valueOf(search_price));
-            postData.put("location", search_loc);
-            postData.put("types", search_typs);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                System.out.println(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-        //.......................................................................................................
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  new Response.Listener < JSONArray > () {
-
-            @Override
-            public void onResponse(JSONArray response) {
-                System.out.println("success in respones");
-                try {
-                    System.out.println("success get the array");
-                    if(response.length() == 0){
-                        jsonresult.add("there is no result return");
-                    }
-                    else{
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject jb = response.getJSONObject(i);
-                            jsonresult.add(jb.toString());
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("research", error.toString());
-            }
-        });
-
-        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(500000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(jsonArrayRequest);
-
-        return jsonresult;
-    }
+    //}
 
     /**
      * Manipulates the map once available.

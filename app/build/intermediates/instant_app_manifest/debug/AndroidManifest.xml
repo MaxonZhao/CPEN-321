@@ -41,7 +41,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity android:name="com.example.cpen321_m5.ChatRoom" />
-        <activity android:name="com.example.cpen321_m5.Signin_activity" />
+        <activity android:name="com.example.cpen321_m5.Signingactivity" />
         <activity android:name="com.example.cpen321_m5.Chat" />
         <activity android:name="com.example.cpen321_m5.Post" />
         <!--
