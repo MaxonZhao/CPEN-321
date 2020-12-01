@@ -1,16 +1,24 @@
 package com.example.cpen321_m5;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,19 +26,32 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Post extends AppCompatActivity {
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
+public class Post extends AppCompatActivity {
+    private int IMAGE_REQUEST_ID = 1;
+    private Bitmap image;
+    private String notification_token;
+    private static final String TAG = "POST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Button submit;
+        View pickImg_Button;
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
@@ -60,6 +81,24 @@ public class Post extends AppCompatActivity {
             }
         });
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // 3
+                        notification_token = task.getResult().getToken();
+
+                        Log.d(TAG, "TOKEN --------------------->"  + notification_token);
+                    }
+                });
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
         //......................................................................................
 
         submit = (Button) findViewById(R.id.submit);
@@ -79,6 +118,11 @@ public class Post extends AppCompatActivity {
                 String postUrl = "http:40.87.45.133:3000";
                 RequestQueue requestQueue = Volley.newRequestQueue(Post.this);
                 JSONObject postData = new JSONObject();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+
+                String base64String = Base64.encodeToString(outputStream.toByteArray(),
+                        Base64.DEFAULT);
 
                 try {
                     postData.put("price", Integer.valueOf(pricestring));
@@ -87,6 +131,8 @@ public class Post extends AppCompatActivity {
                     postData.put("phone", rettext(R.id.editphone));
                     postData.put("email", rettext(R.id.editemail));
                     postData.put("descript", rettext(R.id.editdescrip));
+                    
+//                    postData.put("image", base64String);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -107,7 +153,42 @@ public class Post extends AppCompatActivity {
                 finish();
             }
         });
+
+        pickImg_Button = findViewById(R.id.pickImg_post);
+        pickImg_Button.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+
+            startActivityForResult(Intent.createChooser(intent, "Pick image"), IMAGE_REQUEST_ID);
+        });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == IMAGE_REQUEST_ID && resultCode == RESULT_OK) {
+
+            try {
+                InputStream is = getContentResolver().openInputStream(data.getData());
+                Bitmap image = BitmapFactory.decodeStream(is);
+
+                this.image = image;
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+
+                String base64String = Base64.encodeToString(outputStream.toByteArray(),
+                        Base64.DEFAULT);
+                Log.d("TAG", base64String);
+
+            } catch (FileNotFoundException e) {
+                Log.d("TAG", "LINE 155 --------------------------->");
+                e.printStackTrace();
+            }
+
+        }
+    }
+
 
 
     public String retspinner(int id_number){

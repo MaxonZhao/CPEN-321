@@ -1985,6 +1985,7 @@ id percent
 id phone
 id phonetxt
 id pickImgBtn
+id pickImg_post
 id pin
 id position
 id postLayout
@@ -2417,6 +2418,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string pickImg_buttton
 string project_id
 string prompt_email
 string prompt_password
