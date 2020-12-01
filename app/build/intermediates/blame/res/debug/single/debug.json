@@ -332,6 +332,10 @@
         "source": "C:\\CPEN___321\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_search_bar.png"
     },
     {
+        "merged": "C:\\CPEN___321\\app\\build\\intermediates\\res\\merged\\debug\\layout_layout.xml.flat",
+        "source": "C:\\CPEN___321\\app\\src\\main\\res\\layout\\layout.xml"
+    },
+    {
         "merged": "C:\\CPEN___321\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_directions.png.flat",
         "source": "C:\\CPEN___321\\app\\build\\generated\\res\\pngs\\debug\\drawable-hdpi\\ic_directions.png"
     },

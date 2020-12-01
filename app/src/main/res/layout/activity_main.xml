@@ -7,54 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/location_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
-        android:text="@string/location_button_caption"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/maps_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.681"
-        tools:visibility="invisible" />
-
-    <Button
-        android:id="@+id/maps_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="68dp"
-        android:text="@string/maps_button_caption"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/request_time_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="invisible" />
-
-    <Button
-        android:id="@+id/request_time_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
-        android:text="@string/request_time_button_caption"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/time_displayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/time_displayer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/request_time_button" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -71,7 +23,8 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="70dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,68 +49,16 @@
         android:id="@+id/button_retrieve_token"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="@string/retrieve_token"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/location_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/text_view_notification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="101dp"
-        android:layout_height="101dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginBottom="220dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/house_logo" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="101dp"
-        android:layout_height="101dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/house_logo" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="101dp"
-        android:layout_height="101dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        app:layout_constraintHorizontal_bias="0.941"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/house_logo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.152" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="101dp"
-        android:layout_height="101dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginBottom="220dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/house_logo" />
+
 
     <ImageView
         android:id="@+id/search_image"
@@ -171,7 +72,81 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sign_in_image"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_search_bar" />
+        app:srcCompat="@drawable/ic_search_bar"
+        tools:ignore="VectorDrawableCompat" />
+
+
+    <TextView
+        android:id="@+id/text_view_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.571"
+        tools:ignore="UnknownId" />
+
+    <ListView
+        android:id="@+id/recomm_list"
+        android:layout_width="366dp"
+        android:layout_height="370dp"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="1sp"
+        android:headerDividersEnabled="true"
+
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_image">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/recommtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:text="Recommend:  "
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/recomm_list"
+        app:layout_constraintStart_toStartOf="@+id/recomm_list" />
+
+
+
+
+    <ListView
+        android:id="@+id/search_list"
+        android:layout_width="366dp"
+        android:layout_height="370dp"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="1sp"
+        android:headerDividersEnabled="true"
+
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_image">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/searchtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:text="Search:  "
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/search_list"
+        app:layout_constraintStart_toStartOf="@+id/search_list" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

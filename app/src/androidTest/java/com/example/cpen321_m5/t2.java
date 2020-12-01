@@ -45,13 +45,7 @@ public class t2 {
     @Test
     public void t2() {
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.nav_post), withContentDescription("Post"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.bottomNavigationView),
-                                        0),
-                                1),
-                        isDisplayed()));
+                allOf(withId(R.id.nav_post), withContentDescription("Post")));
         bottomNavigationItemView.perform(click());
 
         ViewInteraction appCompatEditText = onView(
@@ -159,13 +153,7 @@ public class t2 {
         appCompatButton.perform(scrollTo(), click());
 
         ViewInteraction bottomNavigationItemView1 = onView(
-                allOf(withId(R.id.nav_post), withContentDescription("Post"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.bottomNavigationView),
-                                        0),
-                                1),
-                        isDisplayed()));
+                allOf(withId(R.id.nav_post), withContentDescription("Post")));
         bottomNavigationItemView1.perform(click());
 
         ViewInteraction appCompatEditText1 = onView(

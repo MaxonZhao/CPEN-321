@@ -44,15 +44,9 @@ public class t1 {
     @Test
     public void t1() {
         ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.search_image),
-                        childAtPosition(
-                                allOf(withId(R.id.signin_image),
-                                        childAtPosition(
-                                                withId(android.R.id.content),
-                                                0)),
-                                13),
-                        isDisplayed()));
+                allOf(withId(R.id.search_image)));
         appCompatImageView.perform(click());
+
 
         ViewInteraction view = onView(
                 allOf(withContentDescription("Google Map"),
@@ -63,6 +57,8 @@ public class t1 {
                                 0),
                         isDisplayed()));
         view.check(matches(isDisplayed()));
+
+
 
         ViewInteraction spinner = onView(
                 allOf(withId(R.id.search_loc_spi),
@@ -82,6 +78,9 @@ public class t1 {
                 .atPosition(1);
         checkedTextView.perform(click());
 
+
+
+
         ViewInteraction textView = onView(
                 allOf(withId(android.R.id.text1), withText("Totem Park"),
                         childAtPosition(
@@ -92,6 +91,10 @@ public class t1 {
                                 0),
                         isDisplayed()));
         textView.check(matches(withText("Totem Park")));
+
+
+
+
 
         ViewInteraction spinner2 = onView(
                 allOf(withId(R.id.search_types_spi),
@@ -111,6 +114,8 @@ public class t1 {
                 .atPosition(5);
         checkedTextView2.perform(click());
 
+
+
         ViewInteraction textView2 = onView(
                 allOf(withId(android.R.id.text1), withText("Three Bedroom Suit"),
                         childAtPosition(
@@ -122,6 +127,9 @@ public class t1 {
                         isDisplayed()));
         textView2.check(matches(withText("Three Bedroom Suit")));
 
+
+
+
         ViewInteraction editText = onView(
                 allOf(withId(R.id.search_price_edi),
                         childAtPosition(
@@ -132,6 +140,7 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText.perform(replaceText("1234"), closeSoftKeyboard());
+
 
         ViewInteraction editText2 = onView(
                 allOf(withId(R.id.search_price_edi), withText("1234"),
@@ -154,6 +163,9 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText3.check(matches(withText("1234")));
+
+
+
 
         ViewInteraction editText4 = onView(
                 allOf(withId(R.id.search_price_edi), withText("1234"),

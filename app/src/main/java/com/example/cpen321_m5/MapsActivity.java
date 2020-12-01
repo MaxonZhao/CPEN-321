@@ -39,6 +39,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -136,7 +138,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.v("search/price:", String.valueOf(price_test));
 
 
+
+
+
                 //........................................................................................................
+                Date start = Calendar.getInstance().getTime();
+                long start_ms = start.getTime();
+
                 String url = "http:40.87.45.133:3000/search";
                 RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
                 JSONObject postData = new JSONObject();
@@ -159,49 +167,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
+                        Intent mIntent = new Intent();
+                        mIntent.putExtra("keyName", jsonresult);
+                        setResult(RESULT_OK, mIntent);
+                        finish();
+
                         error.printStackTrace();
+
                     }
                 });
                 requestQueue.add(jsonObjectRequest);
                 //.......................................................................................................
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,  new Response.Listener < JSONArray > () {
 
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.i("search/return", "success in respones");
-                        try {
-                            Log.i("search/return", "success get the array");
-                            if(response.length() == 0){
 
-                                Log.i("search/return length", String.valueOf(response.length()));
-                            }
-                            else{
-                                Log.i("search/return length", String.valueOf(response.length()));
-                                for (int i = 0; i < response.length(); i++) {
-                                    JSONObject jb = response.getJSONObject(i);
-                                    Log.i("search/one of result",jb.toString());
 
-                                    jsonresult.add(jb.toString());
-                                    System.out.println("jsonresult");
-                                    System.out.println(jsonresult.size());
-                                }
-                                Intent mIntent = new Intent();
-                                mIntent.putExtra("keyName", jsonresult);
-                                setResult(RESULT_OK, mIntent);
-                                finish();
 
-                            }
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, response -> {
+                    Log.i("search/return", "success in respones");
+                    try {
+                        Log.i("search/return", "success get the array");
+                        if(response.length() == 0){
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.i("search/return length", String.valueOf(response.length()));
                         }
+                        else{
+
+                            Date end = Calendar.getInstance().getTime();
+                            long end_ms = end.getTime();
+                            long durlation= end_ms - start_ms;
+                            System.out.println("time consume: " + durlation);
+
+                            Log.i("search/return length", String.valueOf(response.length()));
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jb = response.getJSONObject(i);
+                                Log.i("search/one of result",jb.toString());
+
+                                jsonresult.add(jb.toString());
+                                System.out.println("jsonresult");
+                                System.out.println(jsonresult.size());
+                            }
+                            Intent mIntent = new Intent();
+                            mIntent.putExtra("keyName", jsonresult);
+                            setResult(RESULT_OK, mIntent);
+                            finish();
+
+                        }
+
+                    } catch (JSONException e) {
+                        Log.i("search/return", "unsuccess get the array");
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("research", error.toString());
-                    }
-                });
+                }, error -> Log.e("search", error.toString()));
 
                 jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(500000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 requestQueue.add(jsonArrayRequest);
@@ -227,6 +244,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.nav_chat:
+                        startActivity(new Intent(getApplicationContext(), Chat.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.nav_post:
                         startActivity(new Intent(getApplicationContext(), Post.class));
