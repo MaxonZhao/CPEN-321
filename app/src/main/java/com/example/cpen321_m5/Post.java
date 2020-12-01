@@ -134,8 +134,8 @@ public class Post extends AppCompatActivity {
                     postData.put("phone", rettext(R.id.editphone));
                     postData.put("email", rettext(R.id.editemail));
                     postData.put("descript", rettext(R.id.editdescrip));
-
-//                    postData.put("image", base64String);
+                    postData.put("image", base64String);
+                    postData.put("token", notification_token);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -184,15 +184,14 @@ public class Post extends AppCompatActivity {
                         Base64.DEFAULT);
 
                 img = findViewById(R.id.imageView_post);
-
                 byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
                 img.setImageBitmap(decodedByte);
-                Log.d("TAG", base64String);
+
+                //Log.d("TAG", base64String);
 
             } catch (FileNotFoundException e) {
-                Log.d("TAG", "LINE 155 --------------------------->");
+                //Log.d("TAG", "LINE 155 --------------------------->");
                 e.printStackTrace();
             }
 

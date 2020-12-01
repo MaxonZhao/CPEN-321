@@ -9,7 +9,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:animationCache="false"
         android:background="#6CA7C1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="165dp"
+        android:layout_marginBottom="60dp"
         android:background="#ffa5a5"
         android:fillViewport="false"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
@@ -150,6 +150,25 @@
 
 
             <Button
+                android:id="@+id/pickImg_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pickImg_buttton"
+                android:background="#ffa5a5"/>
+
+            <ImageView
+                android:id="@+id/imageView_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:gravity="center_horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView3"
+                app:srcCompat="@drawable/chat_icon2" />
+
+            <Button
                 android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
@@ -160,27 +179,11 @@
                 android:textAlignment="center"
                 android:textSize="40sp" />
 
-            <Button
-                android:id="@+id/pickImg_post"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pickImg_buttton" />
-
-
         </LinearLayout>
 
 
     </ScrollView>
 
-    <ImageView
-        android:id="@+id/imageView_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3"
-        app:srcCompat="@drawable/chat_icon2" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

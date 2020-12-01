@@ -1899,6 +1899,7 @@ id image
 id imageView
 id imageView3
 id imageView_post
+id imagetxt
 id info
 id invisible
 id italic

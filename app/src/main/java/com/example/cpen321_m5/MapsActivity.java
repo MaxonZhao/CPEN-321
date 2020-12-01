@@ -139,92 +139,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-
-
-                //........................................................................................................
-                Date start = Calendar.getInstance().getTime();
-                long start_ms = start.getTime();
-
-                String url = "http:40.87.45.133:3000/search";
-                RequestQueue requestQueue = Volley.newRequestQueue(MapsActivity.this);
-                JSONObject postData = new JSONObject();
-                try {
-                    Log.i("search/send", search_price);
-                    Log.i("search/send", search_loc);
-                    Log.i("search/send", search_typs);
-
-                    postData.put("price", Integer.valueOf(search_price));
-                    postData.put("location", search_loc);
-                    postData.put("types", search_typs);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        Intent mIntent = new Intent();
-                        mIntent.putExtra("keyName", jsonresult);
-                        setResult(RESULT_OK, mIntent);
-                        finish();
-
-                        error.printStackTrace();
-
-                    }
-                });
-                requestQueue.add(jsonObjectRequest);
-                //.......................................................................................................
-
-
-
-
-                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, response -> {
-                    Log.i("search/return", "success in respones");
-                    try {
-                        Log.i("search/return", "success get the array");
-                        if(response.length() == 0){
-
-                            Log.i("search/return length", String.valueOf(response.length()));
-                        }
-                        else{
-
-                            Date end = Calendar.getInstance().getTime();
-                            long end_ms = end.getTime();
-                            long durlation= end_ms - start_ms;
-                            System.out.println("time consume: " + durlation);
-
-                            Log.i("search/return length", String.valueOf(response.length()));
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jb = response.getJSONObject(i);
-                                Log.i("search/one of result",jb.toString());
-
-                                jsonresult.add(jb.toString());
-                                System.out.println("jsonresult");
-                                System.out.println(jsonresult.size());
-                            }
-                            Intent mIntent = new Intent();
-                            mIntent.putExtra("keyName", jsonresult);
-                            setResult(RESULT_OK, mIntent);
-                            finish();
-
-                        }
-
-                    } catch (JSONException e) {
-                        Log.i("search/return", "unsuccess get the array");
-                        e.printStackTrace();
-                    }
-                }, error -> Log.e("search", error.toString()));
-
-                jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(500000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                requestQueue.add(jsonArrayRequest);
-
-
-                //.........................................................................................................
+                jsonresult.add(search_price);
+                jsonresult.add(search_loc);
+                jsonresult.add(search_typs);
+                Intent mIntent = new Intent();
+                mIntent.putExtra("keyName", jsonresult);
+                setResult(RESULT_OK, mIntent);
+                finish();
 
             }
         });
