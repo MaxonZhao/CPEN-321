@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -45,12 +46,14 @@ public class Post extends AppCompatActivity {
     private Bitmap image;
     private String notification_token;
     private static final String TAG = "POST";
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Button submit;
         View pickImg_Button;
+
 
 
         super.onCreate(savedInstanceState);
@@ -131,7 +134,7 @@ public class Post extends AppCompatActivity {
                     postData.put("phone", rettext(R.id.editphone));
                     postData.put("email", rettext(R.id.editemail));
                     postData.put("descript", rettext(R.id.editdescrip));
-                    
+
 //                    postData.put("image", base64String);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -175,10 +178,17 @@ public class Post extends AppCompatActivity {
 
                 this.image = image;
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+                image.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
 
                 String base64String = Base64.encodeToString(outputStream.toByteArray(),
                         Base64.DEFAULT);
+
+                img = findViewById(R.id.imageView_post);
+
+                byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                img.setImageBitmap(decodedByte);
                 Log.d("TAG", base64String);
 
             } catch (FileNotFoundException e) {

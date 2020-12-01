@@ -1898,6 +1898,7 @@ id ignoreRequest
 id image
 id imageView
 id imageView3
+id imageView_post
 id info
 id invisible
 id italic
@@ -2016,6 +2017,7 @@ id scroll
 id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
+id scrollView3
 id scrollable
 id search_badge
 id search_bar
