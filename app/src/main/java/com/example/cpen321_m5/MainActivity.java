@@ -62,15 +62,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Button button_retrieve_token;
         ImageView sign_in_image;
-        //........................
+
         View search_image;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //................................
 
         recommend_list = findViewById(R.id.recomm_list);
         research_list = findViewById(R.id.search_list);
@@ -83,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         search_txt.setVisibility(View.INVISIBLE);
 
         showrecomm();
-
-    //................................
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("MyData"));
         // initialize And Assign Variable
@@ -113,7 +108,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button_retrieve_token = findViewById(R.id.button_retrieve_token);
+        token();
+
+        search_image = findViewById(R.id.search_image);
+        search_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Trying to open search page");
+                Intent mapsIntent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivityForResult(mapsIntent, REQUEST_CODE);
+            }
+        });
+
+        sign_in_image = findViewById(R.id.sign_in_image);
+        sign_in_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Signingactivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void token() {
+        View button_retrieve_token = findViewById(R.id.button_retrieve_token);
         if (checkGooglePlayServices()) {
             button_retrieve_token.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,26 +161,9 @@ public class MainActivity extends AppCompatActivity {
             Log.w(TAG, "Device doesn't have google play services");
         }
 
-        search_image = findViewById(R.id.search_image);
-        search_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Trying to open search page");
-                Intent mapsIntent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivityForResult(mapsIntent, REQUEST_CODE);
-            }
-        });
-
-        sign_in_image = findViewById(R.id.sign_in_image);
-        sign_in_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Signingactivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -186,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
     public void showsearch(ArrayList<String> strMessage){
         String url = "http:40.87.45.133:3000/search";
 
@@ -208,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println(response);
+                 System.out.println(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -305,7 +308,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Log.i("recomm/return", "success get the array");
                 if(response.length() == 0){
-
                     Log.i("recomm/return length", String.valueOf(response.length()));
                 }
                 else{
@@ -321,57 +323,29 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject jb = response.getJSONObject(i);
                         Log.i("recomm/one of result",jb.toString());
 
-                        //recommend_result.add(jb.toString());
-                        //System.out.println("size of recommresult");
-                        //System.out.println(recommend_result.size());
-
-
                         HashMap<String,Object> map = new HashMap<String,Object>();
                         map.put("price", jb.getInt("price"));
-
-                        //"price":3421,"location":"Place Vanier","types":"Shared Room","phone":"","email":"","descript":""
                         map.put("location", jb.getString("location"));
                         map.put("types", jb.getString("types"));
                         map.put("phone", jb.getString("phone"));
                         map.put("email", jb.getString("email"));
-                        //map.put("descript", jb.getString("descript"));
+
                         try {
                             String store = jb.getString("image");
                             byte[] decodedString = Base64.decode(store, Base64.DEFAULT);
                             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                             map.put("image", decodedByte);
-
                         } catch (JSONException e) {
                             map.put("image", null);
                         }
-
-
                         recommlistItem.add(map);
-
                     }
-
-
                     SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, recommlistItem, R.layout.layout,
                             new String[] {"price","location", "types","phone","email", "image"},
                             new int[] {R.id.price,R.id.location,R.id.types,R.id.phone,R.id.email, R.id.image});
 
                     ListView list= (ListView) findViewById(R.id.recomm_list);
                     mSimpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-
-                        /**
-                         * Binds the specified data to the specified view.
-                         * <p>
-                         * When binding is handled by this ViewBinder, this method must return true.
-                         * If this method returns false, SimpleAdapter will attempts to handle
-                         * the binding on its own.
-                         *
-                         * @param view               the view to bind the data to
-                         * @param data               the data to bind to the view
-                         * @param textRepresentation a safe String representation of the supplied data:
-                         *                           it is either the result of data.toString() or an empty String but it
-                         *                           is never null
-                         * @return true if the data was bound to the view, false otherwise
-                         */
                         @Override
                         public boolean setViewValue(View view, Object data, String textRepresentation) {
                             if(view instanceof ImageView && data instanceof Bitmap){
@@ -384,10 +358,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     list.setAdapter(mSimpleAdapter);
-
                 }
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
