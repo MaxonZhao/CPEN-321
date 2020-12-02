@@ -1,5 +1,4 @@
 package com.example.cpen321_m5;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,10 +48,7 @@ public class Post extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Button submit;
         View pickImg_Button;
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
@@ -102,9 +96,20 @@ public class Post extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
-        //......................................................................................
 
-        submit = (Button) findViewById(R.id.submit);
+        backtomain();
+
+        pickImg_Button = findViewById(R.id.pickImg_post);
+        pickImg_Button.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+
+            startActivityForResult(Intent.createChooser(intent, "Pick image"), IMAGE_REQUEST_ID);
+        });
+    }
+
+    public void backtomain(){
+        Button submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -157,13 +162,6 @@ public class Post extends AppCompatActivity {
             }
         });
 
-        pickImg_Button = findViewById(R.id.pickImg_post);
-        pickImg_Button.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-
-            startActivityForResult(Intent.createChooser(intent, "Pick image"), IMAGE_REQUEST_ID);
-        });
     }
 
     @Override

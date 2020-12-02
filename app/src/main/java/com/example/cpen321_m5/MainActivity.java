@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -72,14 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-
-
-
         //................................
-
 
         recommend_list = findViewById(R.id.recomm_list);
         research_list = findViewById(R.id.search_list);
@@ -91,107 +82,7 @@ public class MainActivity extends AppCompatActivity {
         recommend_txt.setVisibility(View.VISIBLE);
         search_txt.setVisibility(View.INVISIBLE);
 
-
-        Date start = Calendar.getInstance().getTime();
-        long start_ms = start.getTime();
-
-        String url = "http:40.87.45.133:3000/logic";
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, response -> {
-            Log.i("recomm/return", "success in respones");
-            try {
-                Log.i("recomm/return", "success get the array");
-                if(response.length() == 0){
-
-                    Log.i("recomm/return length", String.valueOf(response.length()));
-                }
-                else{
-                    Date end = Calendar.getInstance().getTime();
-                    long end_ms = end.getTime();
-                    long durlation= end_ms - start_ms;
-                    System.out.println("time consume: " + durlation);
-
-                    Log.i("recomm/return length", String.valueOf(response.length()));
-                    recommlistItem.clear();
-
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject jb = response.getJSONObject(i);
-                        Log.i("recomm/one of result",jb.toString());
-
-                        //recommend_result.add(jb.toString());
-                        //System.out.println("size of recommresult");
-                        //System.out.println(recommend_result.size());
-
-
-                        HashMap<String,Object> map = new HashMap<String,Object>();
-                        map.put("price", jb.getInt("price"));
-
-                        //"price":3421,"location":"Place Vanier","types":"Shared Room","phone":"","email":"","descript":""
-                        map.put("location", jb.getString("location"));
-                        map.put("types", jb.getString("types"));
-                        map.put("phone", jb.getString("phone"));
-                        map.put("email", jb.getString("email"));
-                        //map.put("descript", jb.getString("descript"));
-                        try {
-                            String store = jb.getString("image");
-                            byte[] decodedString = Base64.decode(store, Base64.DEFAULT);
-                            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                            map.put("image", decodedByte);
-
-                        } catch (JSONException e) {
-                           map.put("image", null);
-                        }
-
-
-                        recommlistItem.add(map);
-
-                    }
-
-
-                    SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, recommlistItem, R.layout.layout,
-                            new String[] {"price","location", "types","phone","email", "image"},
-                            new int[] {R.id.price,R.id.location,R.id.types,R.id.phone,R.id.email, R.id.image});
-
-                    ListView list= (ListView) findViewById(R.id.recomm_list);
-                    mSimpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-
-                        /**
-                         * Binds the specified data to the specified view.
-                         * <p>
-                         * When binding is handled by this ViewBinder, this method must return true.
-                         * If this method returns false, SimpleAdapter will attempts to handle
-                         * the binding on its own.
-                         *
-                         * @param view               the view to bind the data to
-                         * @param data               the data to bind to the view
-                         * @param textRepresentation a safe String representation of the supplied data:
-                         *                           it is either the result of data.toString() or an empty String but it
-                         *                           is never null
-                         * @return true if the data was bound to the view, false otherwise
-                         */
-                        @Override
-                        public boolean setViewValue(View view, Object data, String textRepresentation) {
-                            if(view instanceof ImageView && data instanceof Bitmap){
-                                ImageView i = (ImageView)view;
-                                i.setImageBitmap((Bitmap) data);
-                                return true;
-                            }
-                            return false;
-
-                        }
-                    });
-                    list.setAdapter(mSimpleAdapter);
-
-                }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, error -> Log.e("recomm", error.toString()));
-        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(5000000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        requestQueue.add(jsonArrayRequest);
-
+        showrecomm();
 
     //................................
 
@@ -291,133 +182,218 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> strMessage = data.getStringArrayListExtra("keyName");
             Log.i(TAG , "Search Result >>" + strMessage);
 
-            //..........................................................
+            showsearch(strMessage);
 
-            String url = "http:40.87.45.133:3000/search";
-            RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-            JSONObject postData = new JSONObject();
-            try {
-                Log.i("search/send", strMessage.get(0));
-                Log.i("search/send", strMessage.get(1));
-                Log.i("search/send", strMessage.get(2));
+        }
+    }
+    public void showsearch(ArrayList<String> strMessage){
+        String url = "http:40.87.45.133:3000/search";
 
-                postData.put("price", Integer.valueOf(strMessage.get(0)));
-                postData.put("location", strMessage.get(1));
-                postData.put("types", strMessage.get(2));
-            } catch (JSONException e) {
-                e.printStackTrace();
+        Date start = Calendar.getInstance().getTime();
+        long start_ms = start.getTime();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        JSONObject postData = new JSONObject();
+        try {
+            Log.i("search/send", strMessage.get(0));
+            Log.i("search/send", strMessage.get(1));
+            Log.i("search/send", strMessage.get(2));
+
+            postData.put("price", Integer.valueOf(strMessage.get(0)));
+            postData.put("location", strMessage.get(1));
+            postData.put("types", strMessage.get(2));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
             }
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    System.out.println(response);
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+        //.......................................................................................................
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, response -> {
+            Log.i("search/return", "success in respones");
+            try {
+                Log.i("search/return", "success get the array");
+
+                Date end = Calendar.getInstance().getTime();
+                long end_ms = end.getTime();
+                long durlation= end_ms - start_ms;
+                System.out.println("time consume: " + durlation);
+
+                if(response.length() == 0){
+                    Log.i("search/return length", String.valueOf(response.length()));
+
+                    HashMap<String,Object> map = new HashMap<String,Object>();
+                    map.put("price", 404);
+                    map.put("location", "404");
+                    map.put("types", "404");
+                    map.put("phone", "404");
+                    map.put("email", "404");
+                    searchlistItem.add(map);
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
+                else{
 
-            requestQueue.add(jsonObjectRequest);
-            //.......................................................................................................
-
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, response -> {
-                Log.i("search/return", "success in respones");
-                try {
-                    Log.i("search/return", "success get the array");
-                    if(response.length() == 0){
-
-                        Log.i("search/return length", String.valueOf(response.length()));
+                    Log.i("search/return length", String.valueOf(response.length()));
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jb = response.getJSONObject(i);
+                        Log.i("search/one of result",jb.toString());
 
                         HashMap<String,Object> map = new HashMap<String,Object>();
-                        map.put("price", 404);
-                        map.put("location", "404");
-                        map.put("types", "404");
-                        map.put("phone", "404");
-                        map.put("email", "404");
+
+                        map.put("price", jb.getInt("price"));
+                        map.put("location", jb.getString("location"));
+                        map.put("types", jb.getString("types"));
+                        map.put("phone", jb.getString("phone"));
+                        map.put("email", jb.getString("email"));
+
+                        String store = jb.getString("image");
+                        byte[] decodedString = Base64.decode(store, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        map.put("image", decodedByte);
+
                         searchlistItem.add(map);
-
                     }
-                    else{
+                    SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, searchlistItem, R.layout.layout,
+                            new String[] {"price","location", "types","phone","email", "image"},
+                            new int[] {R.id.price,R.id.location,R.id.types,R.id.phone,R.id.email, R.id.image});
 
-                        Log.i("search/return length", String.valueOf(response.length()));
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject jb = response.getJSONObject(i);
-                            Log.i("search/one of result",jb.toString());
+                    ListView list= (ListView) findViewById(R.id.search_list);
+
+                    mSimpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+                        @Override
+                        public boolean setViewValue(View view, Object data, String textRepresentation) {
+                            if(view instanceof ImageView && data instanceof Bitmap){
+                                ImageView i = (ImageView)view;
+                                i.setImageBitmap((Bitmap) data);
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                    list.setAdapter(mSimpleAdapter);
+                }
+
+            } catch (JSONException e) {
+                Log.i("search/return", "unsuccess get the array");
+                e.printStackTrace();
+            }
+        }, error -> Log.e("search", error.toString()));
+
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(500000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonArrayRequest);
+
+    }
+    public void showrecomm(){
+        String url = "http:40.87.45.133:3000/logic";
+
+        Date start = Calendar.getInstance().getTime();
+        long start_ms = start.getTime();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, response -> {
+            Log.i("recomm/return", "success in respones");
+            try {
+                Log.i("recomm/return", "success get the array");
+                if(response.length() == 0){
+
+                    Log.i("recomm/return length", String.valueOf(response.length()));
+                }
+                else{
+                    Date end = Calendar.getInstance().getTime();
+                    long end_ms = end.getTime();
+                    long durlation= end_ms - start_ms;
+                    System.out.println("time consume: " + durlation);
+
+                    Log.i("recomm/return length", String.valueOf(response.length()));
+                    recommlistItem.clear();
+
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jb = response.getJSONObject(i);
+                        Log.i("recomm/one of result",jb.toString());
+
+                        //recommend_result.add(jb.toString());
+                        //System.out.println("size of recommresult");
+                        //System.out.println(recommend_result.size());
 
 
-                            HashMap<String,Object> map = new HashMap<String,Object>();
+                        HashMap<String,Object> map = new HashMap<String,Object>();
+                        map.put("price", jb.getInt("price"));
 
-                            map.put("price", jb.getInt("price"));
-                            map.put("location", jb.getString("location"));
-                            map.put("types", jb.getString("types"));
-                            map.put("phone", jb.getString("phone"));
-                            map.put("email", jb.getString("email"));
-
+                        //"price":3421,"location":"Place Vanier","types":"Shared Room","phone":"","email":"","descript":""
+                        map.put("location", jb.getString("location"));
+                        map.put("types", jb.getString("types"));
+                        map.put("phone", jb.getString("phone"));
+                        map.put("email", jb.getString("email"));
+                        //map.put("descript", jb.getString("descript"));
+                        try {
                             String store = jb.getString("image");
                             byte[] decodedString = Base64.decode(store, Base64.DEFAULT);
                             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                             map.put("image", decodedByte);
 
-                            searchlistItem.add(map);
+                        } catch (JSONException e) {
+                            map.put("image", null);
                         }
 
-//                        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
-//                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//                        img.setImageBitmap(decodedByte);
 
-                        SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, searchlistItem, R.layout.layout,
-                                new String[] {"price","location", "types","phone","email", "image"},
-                                new int[] {R.id.price,R.id.location,R.id.types,R.id.phone,R.id.email, R.id.image});
-
-                        ListView list= (ListView) findViewById(R.id.search_list);
-
-                        mSimpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
-
-                            /**
-                             * Binds the specified data to the specified view.
-                             * <p>
-                             * When binding is handled by this ViewBinder, this method must return true.
-                             * If this method returns false, SimpleAdapter will attempts to handle
-                             * the binding on its own.
-                             *
-                             * @param view               the view to bind the data to
-                             * @param data               the data to bind to the view
-                             * @param textRepresentation a safe String representation of the supplied data:
-                             *                           it is either the result of data.toString() or an empty String but it
-                             *                           is never null
-                             * @return true if the data was bound to the view, false otherwise
-                             */
-                            @Override
-                            public boolean setViewValue(View view, Object data, String textRepresentation) {
-                                if(view instanceof ImageView && data instanceof Bitmap){
-                                    ImageView i = (ImageView)view;
-                                    i.setImageBitmap((Bitmap) data);
-                                    return true;
-                                }
-                                return false;
-
-                            }
-                        });
-
-                        list.setAdapter(mSimpleAdapter);
-
-
+                        recommlistItem.add(map);
 
                     }
 
-                } catch (JSONException e) {
-                    Log.i("search/return", "unsuccess get the array");
-                    e.printStackTrace();
+
+                    SimpleAdapter mSimpleAdapter = new SimpleAdapter(this, recommlistItem, R.layout.layout,
+                            new String[] {"price","location", "types","phone","email", "image"},
+                            new int[] {R.id.price,R.id.location,R.id.types,R.id.phone,R.id.email, R.id.image});
+
+                    ListView list= (ListView) findViewById(R.id.recomm_list);
+                    mSimpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
+
+                        /**
+                         * Binds the specified data to the specified view.
+                         * <p>
+                         * When binding is handled by this ViewBinder, this method must return true.
+                         * If this method returns false, SimpleAdapter will attempts to handle
+                         * the binding on its own.
+                         *
+                         * @param view               the view to bind the data to
+                         * @param data               the data to bind to the view
+                         * @param textRepresentation a safe String representation of the supplied data:
+                         *                           it is either the result of data.toString() or an empty String but it
+                         *                           is never null
+                         * @return true if the data was bound to the view, false otherwise
+                         */
+                        @Override
+                        public boolean setViewValue(View view, Object data, String textRepresentation) {
+                            if(view instanceof ImageView && data instanceof Bitmap){
+                                ImageView i = (ImageView)view;
+                                i.setImageBitmap((Bitmap) data);
+                                return true;
+                            }
+                            return false;
+
+                        }
+                    });
+                    list.setAdapter(mSimpleAdapter);
+
                 }
-            }, error -> Log.e("search", error.toString()));
 
-            jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(500000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            requestQueue.add(jsonArrayRequest);
-            //...........................................................
 
-        }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> Log.e("recomm", error.toString()));
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(5000000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonArrayRequest);
     }
 
 
