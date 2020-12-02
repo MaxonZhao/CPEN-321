@@ -11,7 +11,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -196,31 +195,8 @@ public class MainActivity extends AppCompatActivity {
         long start_ms = start.getTime();
 
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        JSONObject postData = new JSONObject();
-        try {
-            Log.i("search/send", strMessage.get(0));
-            Log.i("search/send", strMessage.get(1));
-            Log.i("search/send", strMessage.get(2));
 
-            postData.put("price", Integer.valueOf(strMessage.get(0)));
-            postData.put("location", strMessage.get(1));
-            postData.put("types", strMessage.get(2));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                 System.out.println(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        requestQueue.add(jsonObjectRequest);
+        requestQueue.add(searchsend(strMessage, url));
         //.......................................................................................................
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, response -> {
@@ -296,6 +272,37 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
 
     }
+
+    private JsonObjectRequest searchsend(ArrayList<String> strMessage, String url) {
+
+        JSONObject postData = new JSONObject();
+        try {
+            Log.i("search/send", strMessage.get(0));
+            Log.i("search/send", strMessage.get(1));
+            Log.i("search/send", strMessage.get(2));
+
+            postData.put("price", Integer.valueOf(strMessage.get(0)));
+            postData.put("location", strMessage.get(1));
+            postData.put("types", strMessage.get(2));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        return jsonObjectRequest;
+
+    }
+
     public void showrecomm(){
         String url = "http:40.87.45.133:3000/logic";
 
