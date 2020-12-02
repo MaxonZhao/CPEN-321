@@ -75,8 +75,7 @@ public class ChatRoom extends AppCompatActivity implements TextWatcher {
      * @param after
      */
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        int i = IMAGE_REQUEST_ID;
-        i++;
+
     }
 
     /**
@@ -92,8 +91,7 @@ public class ChatRoom extends AppCompatActivity implements TextWatcher {
      * @param count
      */
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        int i = IMAGE_REQUEST_ID;
-        i++;
+
     }
 
     @Override
