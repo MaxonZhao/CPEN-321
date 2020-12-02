@@ -38,7 +38,7 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class postTest {
+public class posttest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -108,7 +108,12 @@ public class postTest {
                                         0),
                                 3)));
         appCompatSpinner.perform(scrollTo(), click());
+        partone();
+        parttwo();
+        partthree();
+    }
 
+    private void partone() {
         DataInteraction appCompatTextView = onData(anything())
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
@@ -164,10 +169,6 @@ public class postTest {
                                 0),
                         isDisplayed()));
         textView5.check(matches(withText("Connect Single Room")));
-
-
-        parttwo();
-        partthree();
     }
 
     private void partthree() {
