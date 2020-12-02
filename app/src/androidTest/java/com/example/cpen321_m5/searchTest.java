@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class t1 {
+public class searchTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -46,8 +46,6 @@ public class t1 {
         ViewInteraction appCompatImageView = onView(
                 allOf(withId(R.id.search_image)));
         appCompatImageView.perform(click());
-
-
         ViewInteraction view = onView(
                 allOf(withContentDescription("Google Map"),
                         childAtPosition(
@@ -57,9 +55,6 @@ public class t1 {
                                 0),
                         isDisplayed()));
         view.check(matches(isDisplayed()));
-
-
-
         ViewInteraction spinner = onView(
                 allOf(withId(R.id.search_loc_spi),
                         childAtPosition(
@@ -70,17 +65,12 @@ public class t1 {
                                 1),
                         isDisplayed()));
         spinner.perform(click());
-
         DataInteraction checkedTextView = onData(anything())
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
                 .atPosition(1);
         checkedTextView.perform(click());
-
-
-
-
         ViewInteraction textView = onView(
                 allOf(withId(android.R.id.text1), withText("Totem Park"),
                         childAtPosition(
@@ -91,11 +81,6 @@ public class t1 {
                                 0),
                         isDisplayed()));
         textView.check(matches(withText("Totem Park")));
-
-
-
-
-
         ViewInteraction spinner2 = onView(
                 allOf(withId(R.id.search_types_spi),
                         childAtPosition(
@@ -106,16 +91,12 @@ public class t1 {
                                 3),
                         isDisplayed()));
         spinner2.perform(click());
-
         DataInteraction checkedTextView2 = onData(anything())
                 .inAdapterView(childAtPosition(
                         withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
                         0))
                 .atPosition(5);
         checkedTextView2.perform(click());
-
-
-
         ViewInteraction textView2 = onView(
                 allOf(withId(android.R.id.text1), withText("Three Bedroom Suit"),
                         childAtPosition(
@@ -126,10 +107,10 @@ public class t1 {
                                 0),
                         isDisplayed()));
         textView2.check(matches(withText("Three Bedroom Suit")));
+        half();
+    }
 
-
-
-
+    private void half() {
         ViewInteraction editText = onView(
                 allOf(withId(R.id.search_price_edi),
                         childAtPosition(
@@ -140,8 +121,6 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText.perform(replaceText("1234"), closeSoftKeyboard());
-
-
         ViewInteraction editText2 = onView(
                 allOf(withId(R.id.search_price_edi), withText("1234"),
                         childAtPosition(
@@ -152,7 +131,6 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText2.perform(pressImeActionButton());
-
         ViewInteraction editText3 = onView(
                 allOf(withId(R.id.search_price_edi), withText("1234"),
                         childAtPosition(
@@ -163,10 +141,6 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText3.check(matches(withText("1234")));
-
-
-
-
         ViewInteraction editText4 = onView(
                 allOf(withId(R.id.search_price_edi), withText("1234"),
                         childAtPosition(
@@ -177,7 +151,6 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText4.perform(replaceText("1234"));
-
         ViewInteraction editText5 = onView(
                 allOf(withId(R.id.search_price_edi), withText("1234"),
                         childAtPosition(
@@ -188,7 +161,6 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText5.perform(closeSoftKeyboard());
-
         ViewInteraction editText6 = onView(
                 allOf(withId(R.id.search_price_edi), withText("1234"),
                         childAtPosition(
@@ -199,7 +171,6 @@ public class t1 {
                                 5),
                         isDisplayed()));
         editText6.perform(pressImeActionButton());
-
         ViewInteraction seekBar = onView(
                 allOf(withId(R.id.seekBar),
                         childAtPosition(
